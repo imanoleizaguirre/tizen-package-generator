@@ -1,0 +1,9 @@
+# Tizen IDE signing profile
+profiles.xml
+
+# Input, output, and temp directories
+out/
+tmp/
+games/
+
+*.pyc
