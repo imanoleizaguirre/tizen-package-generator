@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="{0}" version="{1}" viewmodes="fullscreen">
+    <tizen:application id="{2}.{3}" package="{2}" required_version="2.1"/>
+    <content src="{4}"/>
+    <icon src="{6}.png"/>
+    <name>{3}</name>
+    <tizen:setting screen-orientation="{5}" context-menu="enable" background-support="disable" encryption="disable" install-location="auto"/>
+</widget>
