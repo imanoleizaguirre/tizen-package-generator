@@ -4,6 +4,6 @@ profiles.xml
 # Input, output, and temp directories
 out/
 tmp/
-games/
+input/
 
 *.pyc
