@@ -10,12 +10,16 @@ import errno
 class TizenPackage(object):
     """Generates a Tizen package"""
 
-    def __init__(self, profile_name, game_folder_name, json):
+    def __init__(self, profile_name, profiles_file, input_folder,
+                 input_folder_name, json):
+
+        self.profiles_file = profiles_file
+        self.input_folder = input_folder
 
         self.profile_name = profile_name
-        self.source_folder = "games/%s" % game_folder_name
-        self.tmp_folder = "tmp/%s" % game_folder_name
-        self.game_folder_name = game_folder_name
+        self.source_folder = "%s/%s" % (input_folder, input_folder_name)
+        self.tmp_folder = "tmp/%s" % input_folder_name
+        self.input_folder_name = input_folder_name
         self.name = json['name']
         self.version = json['version']
         self.launchPath = json['launch_path']
@@ -40,8 +44,8 @@ class TizenPackage(object):
         chars = string.ascii_letters + string.digits
         return ''.join(random.choice(chars) for x in range(10))
 
-    def _copy_game_files(self):
-        """Copies the source file games"""
+    def _copy_input_files(self):
+        """Copies the source file input"""
         try:
             shutil.copytree(self.source_folder, self.tmp_folder)
         except OSError as exc:
@@ -75,33 +79,42 @@ class TizenPackage(object):
         content = template % (self.name)
         open("%s/.project" % self.tmp_folder, "w").write(content)
 
-    def _generateTizenPackage(self):
-        """Generates the Tizen package"""
-
-        print "...packaging .wgt"
-
-        os.system('$TIZEN_SDK_PATH/tools/ide/bin/./web-packaging out/%s.wgt %s'
-            % (self.game_folder_name, self.tmp_folder))
-
     def _generate_signature(self):
         """Generates the signature profile for the future package"""
         print "...generating signature"
 
         os.system("$TIZEN_SDK_PATH/tools/ide/bin/./web-signing –p "
-                  "%s:profiles.xml" % self.profile_name)
+                  "%s:%s" % (self.profile_name, self.profiles_file))
+
+    def _generateTizenPackage(self):
+        """Generates the Tizen package"""
+
+        print "...packaging .wgt"
+
+        errors = os.system("$TIZEN_SDK_PATH/tools/ide/bin/./web-packaging "
+                           "out/%s.wgt %s"
+                           % (self.input_folder_name, self.tmp_folder))
+        return not errors
 
     def install(self):
-        """Install a game on the device"""
-        print "...installing game"
-        os.system("$TIZEN_SDK_PATH/tools/ide/bin/./web-install -w %s.wgt"
-            % self.game_folder_name)
+        """Install an app on the device"""
+        print "...installing %s" % self.name
+        os.system("$TIZEN_SDK_PATH/tools/ide/bin/./web-install -w out/%s.wgt"
+                   % self.input_folder_name)
 
     def generate_package(self):
 
-        print "Generating Tizen package for %s" % self.name
-        self._check_icon()
-        self._copy_game_files()
+        print "\nGenerating Tizen package for %s" % self.name
+        print "=" * (29 + len(self.name))
+
+        try:
+            self._check_icon()
+        except Exception, e:
+            print e
+            return False
+
+        self._copy_input_files()
         self._generateXML()
         self._generateProjectFile()
         self._generate_signature()
-        self._generateTizenPackage()
+        return self._generateTizenPackage()
