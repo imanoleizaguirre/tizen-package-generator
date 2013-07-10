@@ -49,10 +49,10 @@ Just open a terminal and type
     $ python tizen.py
 
 This will start the process. First of all, the script will try to delete previous
-output and temp folders (**out** and **tmp**).
+output and temp folders (*out* and *tmp*).
 
-By default, the script will look for applications in **input** folder, and will
-read the configuration from **conf.json**, but of course, these parameters are
+By default, the script will look for applications in *input* folder, and will
+read the configuration from *conf.json*, but of course, these parameters are
 configurable:
 
     usage: tizen.py [-h] [-i] [-j JSON] [-I INPUT] [-p PROFILES] [-n PROFILE_NAME]
@@ -76,3 +76,8 @@ Known Issues
 
 Tizen SDK signing process fails:
 https://developer.tizen.org/forums/sdk-ide/web-signing-cli-fails
+
+Official Documentation
+-----------------------
+https://developer.tizen.org/help/index.jsp?topic=%2Forg.tizen.web.appprogramming%2Fhtml%2Fide_sdk_tools%2Fcommand_line_interface.htm
+
