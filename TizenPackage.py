@@ -25,15 +25,12 @@ class TizenPackage(object):
         self.launchPath = json['launch_path']
         self.appIdentifier = json['app_identifier']
         self.screen_orientation = json['screen_orientation']
+        self.icon = json['icon']
+
         try:
             self.package = json['package']
         except (KeyError):
             self.package = self._generate_tizen_app_id()
-
-        try:
-            self.icon = json['icon']
-        except:
-            self.icon = "icon.png"
 
     def __str__(self):
         return "Tizen package for %s (%s)" % (self.name, self.package)
