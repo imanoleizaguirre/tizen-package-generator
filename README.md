@@ -1,8 +1,8 @@
 Tizen Package Generator
 =======================
 
-This project is meant to package a applications for Tizen Store easily without
-needing the IDE (everything works through Tizen's SDK's CLI).
+This project is meant to package web applications for Tizen Store easily without
+using the IDE (everything works through Tizen's SDK's CLI).
 
 Works with Tizen SDK 2.1 and 2.2 beta.
 
@@ -90,6 +90,7 @@ TODO
 
 Generate a *profiles.xml* file on the fly given the *.p12* signature file and
 the password.
+[Web Application Signing CLI](https://developer.tizen.org/forums/sdk-ide/web-application-signing-cli)
 
 Known Issues
 -------------
