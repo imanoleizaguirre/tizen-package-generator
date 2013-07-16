@@ -38,6 +38,22 @@ Where to find Tizen SDK files:
 
   *TIZEN_WORKSPACE_FOLDER*/.metadata/.plugins/org.tizen.common.sign/profiles.xml
 
+How to generate your profile
+-----------------------------
+
+Just in case you haven't already created your signature and profile, and you
+don't know how to do it, you just have to (once the SDK is installed) go to
+Preferences > Tizen SDK > Security Profiles, and select "Add".
+
+A new dialog will appear and you only have to fill the information. Once you
+have created the profile, you will need to assign it an Author Certificate.
+
+If you already have one, just select it, otherwise, the IDE will generate one
+for you. Notice that you will need to use the same certificate for your
+applications.
+
+Now you can find those files in the specified paths.
+
 JSON Configuration
 ------------------
 
