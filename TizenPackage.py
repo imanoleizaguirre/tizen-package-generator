@@ -11,15 +11,15 @@ class TizenPackage(object):
     """Generates a Tizen package"""
 
     def __init__(self, profile_name, profiles_file, input_folder,
-                 input_folder_name, json):
+                 app_folder_name, json):
 
         self.profiles_file = profiles_file
         self.input_folder = input_folder
 
         self.profile_name = profile_name
-        self.source_folder = "%s/%s" % (input_folder, input_folder_name)
-        self.tmp_folder = "tmp/%s" % input_folder_name
-        self.input_folder_name = input_folder_name
+        self.source_folder = "%s/%s" % (input_folder, app_folder_name)
+        self.tmp_folder = "tmp/%s" % app_folder_name
+        self.app_folder_name = app_folder_name
         self.name = json['name']
         self.version = json['version']
         self.launchPath = json['launch_path']
@@ -73,7 +73,6 @@ class TizenPackage(object):
 
     def _generateProjectFile(self):
         """Generates the configuration XML file"""
-
         print "...generating .project file."
         template = open('templates/tizenProjectTemplate.txt', 'r').read()
         content = template % (self.name)
@@ -82,9 +81,11 @@ class TizenPackage(object):
     def _generate_signature(self):
         """Generates the signature profile for the future package"""
         print "...generating signature"
-
-        os.system("$TIZEN_SDK_PATH/tools/ide/bin/./web-signing –p "
+        original_path = os.getcwd()
+        os.chdir("tmp/%s" % self.app_folder_name)
+        os.system("$TIZEN_SDK_PATH/tools/ide/bin/./web-signing -l info –p "
                   "%s:%s" % (self.profile_name, self.profiles_file))
+        os.chdir(original_path)
 
     def _generateTizenPackage(self):
         """Generates the Tizen package"""
@@ -93,14 +94,14 @@ class TizenPackage(object):
 
         errors = os.system("$TIZEN_SDK_PATH/tools/ide/bin/./web-packaging "
                            "out/%s.wgt %s"
-                           % (self.input_folder_name, self.tmp_folder))
+                           % (self.app_folder_name, self.tmp_folder))
         return not errors
 
     def install(self):
         """Install an app on the device"""
         print "...installing %s" % self.name
         os.system("$TIZEN_SDK_PATH/tools/ide/bin/./web-install -w out/%s.wgt"
-                   % self.input_folder_name)
+                   % self.app_folder_name)
 
     def generate_package(self):
 
