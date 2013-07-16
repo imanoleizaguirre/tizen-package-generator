@@ -83,7 +83,7 @@ class TizenPackage(object):
         print "...generating signature"
         original_path = os.getcwd()
         os.chdir("tmp/%s" % self.app_folder_name)
-        os.system("$TIZEN_SDK_PATH/tools/ide/bin/./web-signing -l info –p "
+        os.system("$TIZEN_SDK_PATH/tools/ide/bin/./web-signing -p "
                   "%s:%s" % (self.profile_name, self.profiles_file))
         os.chdir(original_path)
 
