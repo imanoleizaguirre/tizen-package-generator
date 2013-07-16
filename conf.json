@@ -4,13 +4,15 @@
         "version": "1.0.0",
         "launch_path": "index.html",
         "app_identifier": "http://test.game1.com",
-        "screen_orientation": "landscape"
+        "screen_orientation": "landscape",
+        "icon": "icon.png"
     },
     "TestGame2": {
         "name": "Test Game 2",
         "version": "2.1.4",
         "launch_path": "index.html",
         "app_identifier": "http://test.game2.com",
-        "screen_orientation": "portrait"
+        "screen_orientation": "portrait",
+        "icon": "icon.png"
     }
 }
