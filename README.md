@@ -119,11 +119,6 @@ the password.
 
 [Web Application Signing CLI](https://developer.tizen.org/forums/sdk-ide/web-application-signing-cli)
 
-Known Issues
--------------
-
-[Tizen SDK signing process fails](https://developer.tizen.org/forums/sdk-ide/web-signing-cli-fails)
-
 Official Documentation
 -----------------------
 [Tizen Documentation](https://developer.tizen.org/help/index.jsp?topic=%2Forg.tizen.web.appprogramming%2Fhtml%2Fide_sdk_tools%2Fcommand_line_interface.htm)
