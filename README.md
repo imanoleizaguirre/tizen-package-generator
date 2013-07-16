@@ -32,11 +32,11 @@ Where to find Tizen SDK files:
 
 **.p12 signature**
 
-    TIZEN_SDK_FOLDER*/tools/certificate-generator/your-signature.p12
+    TIZEN_SDK_FOLDER/tools/certificate-generator/your-signature.p12
 
 **profiles.xml**
 
-    TIZEN_WORKSPACE_FOLDER*/.metadata/.plugins/org.tizen.common.sign/profiles.xml
+    TIZEN_WORKSPACE_FOLDER/.metadata/.plugins/org.tizen.common.sign/profiles.xml
 
 How to generate your profile
 -----------------------------
