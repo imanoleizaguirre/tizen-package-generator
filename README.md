@@ -90,6 +90,7 @@ TODO
 
 Generate a *profiles.xml* file on the fly given the *.p12* signature file and
 the password.
+
 [Web Application Signing CLI](https://developer.tizen.org/forums/sdk-ide/web-application-signing-cli)
 
 Known Issues
