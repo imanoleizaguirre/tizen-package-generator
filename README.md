@@ -66,7 +66,8 @@ each application.
             "version": "1.0.0",
             "launch_path": "index.html",
             "app_identifier": "http://test.game1.com",
-            "screen_orientation": "landscape"
+            "screen_orientation": "landscape",
+            "icon": "icon.png"
         },
         "TestGame2": {
             "name": "Test Game 2",
@@ -74,6 +75,7 @@ each application.
             "launch_path": "index.html",
             "app_identifier": "http://test.game2.com",
             "screen_orientation": "portrait",
+            "icon": "icon.png",
             "package": "EdhY6Tf57"
         }
     }
