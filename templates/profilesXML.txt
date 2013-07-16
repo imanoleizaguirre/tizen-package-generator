@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<profiles version="2.2">
+<profile name="ludei">
+<profileitem ca="{0}/tools/certificate-generator/certificates/developer/tizen-developer-ca.cer" distributor="0" key="{0}/tools/certificate-generator/ludei.p12" password="{1}" rootca=""/>
+<profileitem ca="{0}/tools/certificate-generator/certificates/distributor/tizen-distributor-ca.cer" distributor="1" key="{0}/tools/certificate-generator/certificates/distributor/tizen-distributor-signer.p12" password="{2}=" rootca=""/>
+<profileitem ca="" distributor="2" key="" password="{3}" rootca=""/>
+</profile>
+</profiles>
