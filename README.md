@@ -97,29 +97,28 @@ By default, the script will look for applications in *input* folder, and will
 read the configuration from *conf.json*, but of course, these parameters are
 configurable:
 
-    usage: tizen.py [-h] [-i] [-j JSON] [-I INPUT] [-p PROFILES] [-n PROFILE_NAME]
-                [-k]
+    usage: tizen.py [-h] [-j JSON] [-I INPUT] [-i] [-k] [-s] [-p PROFILES]
+                    [-n PROFILE_NAME]
 
     optional arguments:
       -h, --help            show this help message and exit
-      -i, --install         Install app after the packaging
-      -j JSON, --json JSON  Configuration json file
+      -j JSON, --json JSON  Configuration json file (by default conf.json)
       -I INPUT, --input INPUT
-                            Input folder
-      -p PROFILES, --profiles PROFILES
-                            Profiles XML file
-      -n PROFILE_NAME, --profile_name PROFILE_NAME
-                            Signing profile name
+                            Input folder (by default 'input')
+      -i, --install         Install app after the packaging
       -k, --keep_temp       Do not delete temp files
+      -s, --sign            Sign package
+      -p PROFILES, --profiles PROFILES
+                            Profiles XML file (required only if signing, if not
+                            provided, Tizen SDK's default profile is used)
+      -n PROFILE_NAME, --profile_name PROFILE_NAME
+                            Signing profile name (required only if signing)
 
+If you don't want to sing your application (for debugging for example), you
+don't have to care about the profiles.xml file or the profile name.
 
-TODO
------
-
-Generate a *profiles.xml* file on the fly given the *.p12* certificate file and
-the password.
-
-[Web Application Signing CLI](https://developer.tizen.org/forums/sdk-ide/web-application-signing-cli)
+If you are signing your application and you don't specify a profiles.xml file,
+the default Tizen SDK's profiles.xml file will be used.
 
 Official Documentation
 -----------------------
