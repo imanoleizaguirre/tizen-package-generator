@@ -31,7 +31,7 @@ def clean_up():
     remove_tmp_folder()
 
 
-def check_required_files(input, json_file, profiles):
+def check_required_files(input, json_file, profiles, sign):
     """Checks that all the required files are not missing"""
     try:
         os.environ['TIZEN_SDK_PATH']
@@ -42,21 +42,22 @@ def check_required_files(input, json_file, profiles):
     if not os.path.isfile(json_file):
         raise Exception("Missing configuration json file: %s" % json_file)
 
-    if not os.path.isfile(profiles):
+    if sign and profiles and not os.path.isfile(profiles):
         raise Exception("Missing profiles.xml file")
 
     if not os.listdir(input):
         raise Exception("Input folder is empty")
 
 
-def generate_packages(json_file, profile_name, profiles_file, input_folder):
+def generate_packages(json_file, profile_name, profiles_file, input_folder,
+                      sign):
     """Generates the Tizen packages"""
     input_information = json.loads(open(json_file, 'r').read())
 
     for input, data in input_information.iteritems():
         try:
             tizen_package = TizenPackage(profile_name, profiles_file,
-                                         input_folder, input, data)
+                                         input_folder, input, data, sign)
             wgt = tizen_package.generate_package()
             summary[input] = wgt
             if wgt:
@@ -86,29 +87,35 @@ def print_summary():
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--install",
-                        help="Install app after the packaging",
-                        action="store_true")
-    parser.add_argument('-j', "--json", help="Configuration json file",
-                        required=False, default="conf.json")
-    parser.add_argument('-I', "--input", help="Input folder",
-                        required=False, default="input")
-    parser.add_argument('-p', "--profiles", help="Profiles XML file",
-                        required=False, default="profiles.xml")
-    parser.add_argument('-n', "--profile_name", help="Signing profile name",
-                        required=False, default="test")
-    parser.add_argument('-k', "--keep_temp", help="Do not delete temp files",
-                        action="store_true")
+
+    parser.add_argument('-j', "--json", required=False, default="conf.json",
+        help="Configuration json file (by default conf.json)")
+    parser.add_argument('-I', "--input", required=False, default="input",
+        help="Input folder (by default 'input')")
+    parser.add_argument("-i", "--install", action="store_true",
+        help="Install app after the packaging")
+    parser.add_argument('-k', "--keep_temp", action="store_true",
+        help="Do not delete temp files")
+    parser.add_argument('-s', "--sign", action="store_true",
+        help="Sign package")
+    parser.add_argument('-p', "--profiles", required=False,
+        help=("Profiles XML file (required only if signing, if not provided, "
+              "Tizen SDK's default profile is used)"))
+    parser.add_argument('-n', "--profile_name", required=False, default="test",
+        help="Signing profile name (required only if signing)")
+
     args = parser.parse_args()
 
     json_file = args.json
     profiles_file = args.profiles
     profile_name = args.profile_name
     input_folder = args.input
+    sign = args.sign
 
     clean_up()
-    check_required_files(input_folder, json_file, profiles_file)
-    generate_packages(json_file, profile_name, profiles_file, input_folder)
+    check_required_files(input_folder, json_file, profiles_file, sign)
+    generate_packages(json_file, profile_name, profiles_file, input_folder,
+        sign)
     print_summary()
 
     if not args.keep_temp:

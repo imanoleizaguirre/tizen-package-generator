@@ -11,7 +11,7 @@ class TizenPackage(object):
     """Generates a Tizen package"""
 
     def __init__(self, profile_name, profiles_file, input_folder,
-                 app_folder_name, json):
+                 app_folder_name, json, sign):
 
         self.profiles_file = profiles_file
         self.input_folder = input_folder
@@ -26,6 +26,7 @@ class TizenPackage(object):
         self.appIdentifier = json['app_identifier']
         self.screen_orientation = json['screen_orientation']
         self.icon = json['icon']
+        self.sign = sign
 
         try:
             self.package = json['package']
@@ -38,11 +39,13 @@ class TizenPackage(object):
     def _generate_tizen_app_id(self):
         """Generates a 10-character alphanumeric value used to identify
         a Tizen application"""
+
         chars = string.ascii_letters + string.digits
         return ''.join(random.choice(chars) for x in range(10))
 
     def _copy_input_files(self):
         """Copies the source file input"""
+
         try:
             shutil.copytree(self.source_folder, self.tmp_folder)
         except OSError as exc:
@@ -53,6 +56,7 @@ class TizenPackage(object):
 
     def _check_icon(self):
         """Checks that the folder contains a valid icon"""
+
         if not os.path.isfile("%s/%s" % (self.source_folder, self.icon)):
             raise Exception("Missing icon file. Please create a icon.png")
 
@@ -70,6 +74,7 @@ class TizenPackage(object):
 
     def _generateProjectFile(self):
         """Generates the configuration XML file"""
+
         print "...generating .project file."
         template = open('templates/tizenProjectTemplate.txt', 'r').read()
         content = template % (self.name)
@@ -77,11 +82,13 @@ class TizenPackage(object):
 
     def _generate_signature(self):
         """Generates the signature profile for the future package"""
+
         print "...generating signature"
         original_path = os.getcwd()
         os.chdir("tmp/%s" % self.app_folder_name)
         os.system("$TIZEN_SDK_PATH/tools/ide/bin/./web-signing -p "
-                  "%s:%s" % (self.profile_name, self.profiles_file))
+            "%s%s" % (self.profile_name,
+                (":" + str(self.profiles_file)) if self.profiles_file else ""))
         os.chdir(original_path)
 
     def _generateTizenPackage(self):
@@ -114,5 +121,8 @@ class TizenPackage(object):
         self._copy_input_files()
         self._generateXML()
         self._generateProjectFile()
-        self._generate_signature()
+
+        if self.sign:
+            self._generate_signature()
+
         return self._generateTizenPackage()
