@@ -6,6 +6,8 @@ import random
 import shutil
 import errno
 
+from PIL import Image, ImageOps
+
 
 class TizenPackage(object):
     """Generates a Tizen package"""
@@ -60,7 +62,7 @@ class TizenPackage(object):
         if not os.path.isfile("%s/%s" % (self.source_folder, self.icon)):
             raise Exception("Missing icon file. Please create a icon.png")
 
-    def _generateXML(self):
+    def _generate_config_xml(self):
         """Generates de configuration XML file"""
 
         print "...generating config.xml file."
@@ -72,13 +74,24 @@ class TizenPackage(object):
 
         open("%s/config.xml" % self.tmp_folder, "w").write(xml_content)
 
-    def _generateProjectFile(self):
+    def _generate_dot_project_file(self):
         """Generates the configuration XML file"""
 
         print "...generating .project file."
         template = open('templates/tizenProjectTemplate.txt', 'r').read()
         content = template % (self.name)
         open("%s/.project" % self.tmp_folder, "w").write(content)
+
+    def _generate_icon(self):
+        """Generates a valid Tizen icon file (following UI Guidelines)"""
+
+        print "... generating icon"
+
+        mask = Image.open('mask.png').convert('L')
+        im = Image.open("%s/%s" % (self.tmp_folder, self.icon))
+        output = ImageOps.fit(im, mask.size, centering=(0.5, 0.5))
+        output.putalpha(mask)
+        output.save("%s/%s" % (self.tmp_folder, self.icon))
 
     def _generate_signature(self):
         """Generates the signature profile for the future package"""
@@ -119,8 +132,9 @@ class TizenPackage(object):
             return False
 
         self._copy_input_files()
-        self._generateXML()
-        self._generateProjectFile()
+        self._generate_config_xml()
+        self._generate_icon()
+        self._generate_dot_project_file()
 
         if self.sign:
             self._generate_signature()
