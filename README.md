@@ -80,6 +80,7 @@ each application.
             "launch_path": "index.html",
             "app_identifier": "http://test.game1.com",
             "screen_orientation": "landscape",
+            "viewmodes": "fullscreen",
             "icon": "icon.png"
         },
         "TestGame2": {
@@ -88,6 +89,7 @@ each application.
             "launch_path": "index.html",
             "app_identifier": "http://test.game2.com",
             "screen_orientation": "portrait",
+            "viewmodes": "maximized",
             "icon": "icon.png",
             "package": "EdhY6Tf57"
         }
