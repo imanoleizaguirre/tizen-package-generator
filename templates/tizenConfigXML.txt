@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="{0}" version="{1}" viewmodes="fullscreen">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="{0}" version="{1}" viewmodes="{7}">
     <tizen:application id="{2}.{3}" package="{2}" required_version="2.1"/>
     <content src="{4}"/>
     <icon src="{6}"/>

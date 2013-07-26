@@ -27,6 +27,7 @@ class TizenPackage(object):
         self.launchPath = json['launch_path']
         self.appIdentifier = json['app_identifier']
         self.screen_orientation = json['screen_orientation']
+        self.viewmodes = json['viewmodes']
         self.icon = json['icon']
         self.sign = sign
 
@@ -70,7 +71,7 @@ class TizenPackage(object):
         xml_template = open('templates/tizenConfigXML.txt', 'r').read()
         xml_content = xml_template.format(self.appIdentifier, self.version,
             self.package, self.name, self.launchPath, self.screen_orientation,
-            self.icon)
+            self.icon, self.viewmodes)
 
         open("%s/config.xml" % self.tmp_folder, "w").write(xml_content)
 
